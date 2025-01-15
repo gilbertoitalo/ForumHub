@@ -2,6 +2,7 @@ package com.forum.service;
 
 import java.util.List;
 
+import com.forum.api.exception.DoubleTopicoException;
 import com.forum.api.exception.ResourceNotFoundException;
 import com.forum.dto.TopicoRequest;
 import com.forum.dto.TopicoResponse;
@@ -22,6 +23,9 @@ public class TopicoServiceImpl implements TopicoService {
     @Override
     @Transactional
     public TopicoResponse criar(TopicoRequest request) {
+        if (topicoRepository.existsByTituloAndMensagem(request.getTitulo(),request.getMensagem())){
+            throw new DoubleTopicoException();
+        }
         Topico topico = new Topico();
         topico.setTitulo(request.getTitulo());
         topico.setMensagem(request.getMensagem());

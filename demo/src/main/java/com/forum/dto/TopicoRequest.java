@@ -15,4 +15,11 @@ public class TopicoRequest {
     @NotBlank(message = "A mensagem é obrigatória")
     @Size(min = 10, message = "A mensagem deve ter no mínimo 10 caracteres")
     private String mensagem;
+
+    @NotBlank(message = "O autor é obrigatório")
+    private String autor;
+
+    @NotBlank(message = "O curso é obrigatório")
+    private String curso;
 }
+
