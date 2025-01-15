@@ -37,13 +37,11 @@ public class TopicoController {
         return ResponseEntity.ok(topicos);
     }
 
-
-    @GetMapping("/{id}")
-    public ResponseEntity<TopicoResponse> buscarPorId(@PathVariable Long id) {
-        TopicoResponse response = topicoService.buscarPorId(id);
-        return ResponseEntity.ok(response);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        topicoService.deletar(id);
+        return ResponseEntity.noContent().build();
     }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<TopicoResponse> atualizar(
@@ -51,11 +49,5 @@ public class TopicoController {
             @RequestBody @Valid TopicoRequest request) {
         TopicoResponse response = topicoService.atualizar(id, request);
         return ResponseEntity.ok(response);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        topicoService.deletar(id);
-        return ResponseEntity.noContent().build();
     }
 }

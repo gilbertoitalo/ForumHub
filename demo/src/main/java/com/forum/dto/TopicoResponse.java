@@ -13,6 +13,9 @@ public class TopicoResponse {
     private String titulo;
     private String mensagem;
     private LocalDateTime dataCriacao;
+    private String status;
+    private String autor;
+    private String curso;
 
     public static TopicoResponse fromEntity(Topico topico) {
         TopicoResponse response = new TopicoResponse();
@@ -20,6 +23,9 @@ public class TopicoResponse {
         response.setTitulo(topico.getTitulo());
         response.setMensagem(topico.getMensagem());
         response.setDataCriacao(topico.getDataCriacao());
+        response.setStatus(topico.getStatus().toString());
+        response.setAutor(topico.getAutor());
+        response.setCurso(topico.getCurso());
         return response;
     }
 }

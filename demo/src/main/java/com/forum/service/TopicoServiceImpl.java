@@ -36,8 +36,8 @@ public class TopicoServiceImpl implements TopicoService {
 
     @Override
     public List<TopicoResponse> listarTodos() {
-        return topicoRepository.findAll()
-                .stream()
+        List<Topico> topicos = topicoRepository.findAll();
+        return topicos.stream()
                 .map(TopicoResponse::fromEntity)
                 .collect(Collectors.toList());
     }
@@ -53,14 +53,18 @@ public class TopicoServiceImpl implements TopicoService {
     @Override
     @Transactional
     public TopicoResponse atualizar(Long id, TopicoRequest request) {
-        Topico topico = topicoRepository.findById(id)
+        // Busca o tópico e verifica se existe
+        return topicoRepository.findById(id)
+                .map(topico -> {
+                    topico.setTitulo(request.getTitulo());
+                    topico.setMensagem(request.getMensagem());
+                    topico.setAutor(request.getAutor());
+                    topico.setCurso(request.getCurso());
+
+                    Topico topicoAtualizado = topicoRepository.save(topico);
+                    return TopicoResponse.fromEntity(topicoAtualizado);
+                })
                 .orElseThrow(() -> new ResourceNotFoundException("Tópico", id));
-
-        topico.setTitulo(request.getTitulo());
-        topico.setMensagem(request.getMensagem());
-
-        Topico topicoAtualizado = topicoRepository.save(topico);
-        return TopicoResponse.fromEntity(topicoAtualizado);
     }
 
     @Override
@@ -71,4 +75,5 @@ public class TopicoServiceImpl implements TopicoService {
         }
         topicoRepository.deleteById(id);
     }
+
 }

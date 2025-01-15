@@ -33,7 +33,10 @@ public class Topico {
     private String curso;
 
     @NotNull
-    private LocalDateTime dataCriacao = LocalDateTime.now();;
+    private LocalDateTime dataCriacao = LocalDateTime.now();
+
+    @NotBlank
+    private String status;
 
     // Getters e Setters
     // Getters
@@ -53,6 +56,10 @@ public class Topico {
         return dataCriacao;
     }
 
+    public String getStatus(){
+        return status;
+    }
+
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
@@ -60,6 +67,7 @@ public class Topico {
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
     }
+
 
 }
 
