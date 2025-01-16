@@ -8,6 +8,8 @@ import lombok.*;
 import lombok.extern.java.Log;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,6 +40,8 @@ public class Topico {
 
     @NotBlank
     private String status;
+
+    private List<Reply> replies = new ArrayList<>();
 
     // Getters e Setters
     // Getters
