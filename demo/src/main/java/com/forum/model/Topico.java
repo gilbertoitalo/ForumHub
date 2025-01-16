@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import lombok.extern.java.Log;
 
 import java.time.LocalDateTime;
 
@@ -67,6 +68,8 @@ public class Topico {
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
     }
+
+
 
 
 }

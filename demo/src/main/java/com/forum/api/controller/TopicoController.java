@@ -6,6 +6,7 @@ import com.forum.model.Topico;
 import com.forum.repository.TopicoRepository;
 import com.forum.service.TopicoService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ import java.util.List;
 public class TopicoController {
 
     private final TopicoRepository topicoRepository;
-
+    @Autowired
     private final TopicoService topicoService;
 
     public TopicoController(TopicoRepository topicoRepository, TopicoService topicoService) {
@@ -35,6 +36,15 @@ public class TopicoController {
     public ResponseEntity<List<TopicoResponse>> listarTodos() {
         List<TopicoResponse> topicos = topicoService.listarTodos();
         return ResponseEntity.ok(topicos);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TopicoResponse> getTopicoId (@PathVariable Long id){
+        TopicoResponse topicos = topicoService.buscarPorId(id);
+        if (topicos != null) {
+            return ResponseEntity.ok(topicos);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
