@@ -1,6 +1,6 @@
 package com.forum.dto;
 
-import com.forum.model.Topico;
+import com.forum.model.Topic;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +17,7 @@ public class TopicoResponse {
     private String autor;
     private String curso;
 
-    public static TopicoResponse fromEntity(Topico topico) {
+    public static TopicoResponse fromEntity(Topic topico) {
         TopicoResponse response = new TopicoResponse();
         response.setId(topico.getId());
         response.setTitulo(topico.getTitulo());

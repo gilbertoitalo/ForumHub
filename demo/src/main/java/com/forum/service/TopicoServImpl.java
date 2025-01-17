@@ -6,8 +6,8 @@ import com.forum.api.exception.DoubleTopicoException;
 import com.forum.api.exception.ResourceNotFoundException;
 import com.forum.dto.TopicoRequest;
 import com.forum.dto.TopicoResponse;
-import com.forum.model.Topico;
-import com.forum.repository.TopicoRepository;
+import com.forum.model.Topic;
+import com.forum.repository.TopicRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,27 +16,27 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class TopicoServiceImpl implements TopicoService {
+public class TopicoServImpl implements TopicoServ {
 
-    private final TopicoRepository topicoRepository;
+    private final TopicRepo topicRepository;
 
     @Override
     @Transactional
     public TopicoResponse criar(TopicoRequest request) {
-        if (topicoRepository.existsByTituloAndMensagem(request.getTitulo(),request.getMensagem())){
+        if (topicRepository.existsSimilarTitle(request.getTitulo())){
             throw new DoubleTopicoException();
         }
-        Topico topico = new Topico();
+        Topic topico = new Topic();
         topico.setTitulo(request.getTitulo());
         topico.setMensagem(request.getMensagem());
 
-        Topico topicoSalvo = topicoRepository.save(topico);
+        Topic topicoSalvo = topicRepository.save(topico);
         return TopicoResponse.fromEntity(topicoSalvo);
     }
 
     @Override
     public List<TopicoResponse> listarTodos() {
-        List<Topico> topicos = topicoRepository.findAll();
+        List<Topic> topicos = topicRepository.findAll();
         return topicos.stream()
                 .map(TopicoResponse::fromEntity)
                 .collect(Collectors.toList());
@@ -44,7 +44,7 @@ public class TopicoServiceImpl implements TopicoService {
 
     @Override
     public TopicoResponse buscarPorId(Long id) {
-        Topico topico = topicoRepository.findById(id)
+        Topic topico = topicRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Tópico", id));
 
         return TopicoResponse.fromEntity(topico);
@@ -54,14 +54,14 @@ public class TopicoServiceImpl implements TopicoService {
     @Transactional
     public TopicoResponse atualizar(Long id, TopicoRequest request) {
         // Busca o tópico e verifica se existe
-        return topicoRepository.findById(id)
+        return topicRepository.findById(id)
                 .map(topico -> {
                     topico.setTitulo(request.getTitulo());
                     topico.setMensagem(request.getMensagem());
                     topico.setAutor(request.getAutor());
                     topico.setCurso(request.getCurso());
 
-                    Topico topicoAtualizado = topicoRepository.save(topico);
+                    Topic topicoAtualizado = topicRepository.save(topico);
                     return TopicoResponse.fromEntity(topicoAtualizado);
                 })
                 .orElseThrow(() -> new ResourceNotFoundException("Tópico", id));
@@ -70,10 +70,10 @@ public class TopicoServiceImpl implements TopicoService {
     @Override
     @Transactional
     public void deletar(Long id) {
-        if (!topicoRepository.existsById(id)) {
+        if (!topicRepository.existsById(id)) {
             throw new ResourceNotFoundException("Tópico", id);
         }
-        topicoRepository.deleteById(id);
+        topicRepository.deleteById(id);
     }
 
 }

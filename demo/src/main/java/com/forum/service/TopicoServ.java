@@ -5,7 +5,7 @@ import com.forum.dto.TopicoResponse;
 
 import java.util.List;
 
-public interface TopicoService {
+public interface TopicoServ {
     TopicoResponse criar(TopicoRequest request);
 
     List<TopicoResponse> listarTodos();

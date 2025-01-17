@@ -1,9 +1,15 @@
 package com.forum.model;
 
-import com.forum.dto.UserDetails;
+import com.forum.dto.UserCreationData;
+
 import jakarta.persistence.*;
 import lombok.*;
-
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "User")
@@ -13,6 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

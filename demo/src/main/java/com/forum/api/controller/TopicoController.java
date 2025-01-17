@@ -2,9 +2,8 @@ package com.forum.api.controller;
 
 import com.forum.dto.TopicoRequest;
 import com.forum.dto.TopicoResponse;
-import com.forum.model.Topico;
-import com.forum.repository.TopicoRepository;
-import com.forum.service.TopicoService;
+import com.forum.repository.TopicRepo;
+import com.forum.service.TopicoServ;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,12 +16,12 @@ import java.util.List;
 @RequestMapping("/api/topicos")
 public class TopicoController {
 
-    private final TopicoRepository topicoRepository;
+    private final TopicRepo topicRepository;
     @Autowired
-    private final TopicoService topicoService;
+    private final TopicoServ topicoService;
 
-    public TopicoController(TopicoRepository topicoRepository, TopicoService topicoService) {
-        this.topicoRepository = topicoRepository;
+    public TopicoController(TopicRepo topicRepository, TopicoServ topicoService) {
+        this.topicRepository = topicRepository;
         this.topicoService = topicoService;
     }
 

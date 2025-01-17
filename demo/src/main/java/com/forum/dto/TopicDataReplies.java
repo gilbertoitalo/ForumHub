@@ -2,8 +2,7 @@ package com.forum.dto;
 
 import ch.qos.logback.core.status.Status;
 import com.forum.model.Course;
-import com.forum.model.Topico;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import com.forum.model.Topic;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,7 +17,7 @@ public record TopicDataWithReplies(
         Status status,
         List<ReplyData> replies
 ) {
-    public TopicDataWithReplies(Topico topico) {
+    public TopicDataWithReplies(Topic topico) {
         this(topico.getId(),
                 topico.getMensagem(),
                 topico.getDataCriacao(),
